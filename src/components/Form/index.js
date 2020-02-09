@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-
-import { fetchSearchResults } from 'redux/modules/searchResults';
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -12,34 +9,34 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
   },
-  searchInput: {
+  input: {
     flexGrow: '1',
     marginRight: theme.spacing(2),
   },
 }));
 
-const SearchField = () => {
+const Form = ({ onSubmit, label }) => {
   const styles = useStyles();
-  const dispatch = useDispatch();
-  const [query, setQuery] = useState('');
+  const [text, setText] = useState('');
 
   const onFormSubmit = (event) => {
     event.preventDefault();
-    dispatch(fetchSearchResults(query));
+    onSubmit(text)
   };
 
   return (
     <form onSubmit={onFormSubmit} autoComplete="off" className={styles.form}>
       <TextField
-        onChange={(event) => setQuery(event.target.value)}
-        label="Search"
+        onChange={(event) => setText(event.target.value)}
+        value={text}
+        label={label}
         variant="outlined"
         size="small"
-        className={styles.searchInput}
+        className={styles.input}
       />
       <Button type="submit" variant="contained" color="primary" size="medium">Submit</Button>
     </form>
   );
 };
 
-export default SearchField;
+export default Form;

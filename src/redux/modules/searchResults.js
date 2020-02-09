@@ -74,6 +74,7 @@ export const nextPageSearchResults = (query, page) => async (dispatch) => {
 
 // Selectors
 export const getAllSearchResultsIds = () => (state) => state.searchResults.allIds;
+export const getSearchResultById = (id) => (state) => state.searchResults.byId[id];
 export const getSearchResultTitleById = (id) => (state) => state.searchResults.byId[id].title;
 export const getSearchResultAuthorById = (id) => (state) => state.searchResults.byId[id].author;
 export const getSearchResultCreatedAtById = (id) => (state) => (new Date(state.searchResults.byId[id].created_at));

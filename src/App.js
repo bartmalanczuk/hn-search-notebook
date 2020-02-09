@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import './App.css';
 
+import SearchNotebookView from 'components/SearchNotebookView';
 import SearchNotebooksView from 'components/SearchNotebooksView';
 import SearchResultsView from 'components/SearchResultsView';
 
@@ -40,6 +41,9 @@ function App() {
         </Toolbar>
       </AppBar>
       <Switch>
+        <Route path='/notebooks/:id'>
+          <SearchNotebookView />
+        </Route>
         <Route path='/notebooks'>
           <SearchNotebooksView />
         </Route>

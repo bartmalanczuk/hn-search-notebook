@@ -29,7 +29,6 @@ const LoadMore = () => {
     dispatch(nextPageSearchResults(query, (page + 1)));
   };
 
-  console.log(query, searchResultsIds.length, page < 50)
   if (query && searchResultsIds.length > 0 && page < 50) {
     return (
       <div className={styles.wrapper}>
