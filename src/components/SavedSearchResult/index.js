@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Link from '@material-ui/core/Link';
+import Button from '@material-ui/core/Button';
 
 import SearchResultCard from 'components/SearchResultCard';
 import {
@@ -22,10 +22,11 @@ const SavedSearchResult = ({ id, notebookId }) => {
 
   return (
     <div>
-      <Link onClick={() => dispatch(deleteSavedSearchResultFromNotebook(notebookId, id))} component="button">
-        Delete from notebook
-      </Link>
-      <SearchResultCard id={id} title={title} author={author} createdAt={createdAt} url={url} />
+      <SearchResultCard id={id} title={title} author={author} createdAt={createdAt} url={url}>
+        <Button size="small" onClick={() => dispatch(deleteSavedSearchResultFromNotebook(notebookId, id))}>
+          Delete
+        </Button>
+      </SearchResultCard>
     </div>
   );
 };

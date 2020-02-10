@@ -6,7 +6,6 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-import NotebookSelect from 'components/NotebookSelect';
 import timeFormatter from 'utils/timeFormatter';
 
 const useStyles = makeStyles((theme) => ({
@@ -15,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SearchResultCard = ({ id, title, author, createdAt, url }) => {
+const SearchResultCard = ({ id, title, author, createdAt, children }) => {
   const styles = useStyles();
 
   return (
@@ -29,8 +28,12 @@ const SearchResultCard = ({ id, title, author, createdAt, url }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" href={ url } target="_blank">Read</Button>
-        <NotebookSelect searchResultId={id} />
+        <Button
+          size="small"
+          href={`https://news.ycombinator.com/item?id=${id}`}
+          target="_blank">
+          Read</Button>
+        { children }
       </CardActions>
     </Card>
   );

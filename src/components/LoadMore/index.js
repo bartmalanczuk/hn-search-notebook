@@ -5,10 +5,16 @@ import Button from '@material-ui/core/Button';
 
 import {
   getAllSearchResultsIds,
-  getSearchResultsQuery,
-  getSearchResultsPage,
-  nextPageSearchResults
 } from 'redux/modules/searchResults';
+import {
+  getLastSearchQueryId,
+  getSearchQueryText,
+  getSearchQueryNumberOfPages,
+  getSearchQueryPageNumber,
+} from 'redux/modules/searchQueries';
+import {
+  search,
+} from 'redux/modules/search';
 
 const useStyles = makeStyles(theme => ({
   wrapper: {
@@ -20,16 +26,18 @@ const useStyles = makeStyles(theme => ({
 
 const LoadMore = () => {
   const styles = useStyles();
-  const searchResultsIds = useSelector(getAllSearchResultsIds());
-  const query = useSelector(getSearchResultsQuery());
-  const page = useSelector(getSearchResultsPage());
   const dispatch = useDispatch();
+  const searchResultsIds = useSelector(getAllSearchResultsIds());
+  const lastSearchQueryId = useSelector(getLastSearchQueryId());
+  const queryText = useSelector(getSearchQueryText(lastSearchQueryId));
+  const pageNumber = useSelector(getSearchQueryPageNumber(lastSearchQueryId));
+  const numberOfPages = useSelector(getSearchQueryNumberOfPages(lastSearchQueryId));
 
   const loadNextPage = (event) => {
-    dispatch(nextPageSearchResults(query, (page + 1)));
+    dispatch(search(queryText, (pageNumber + 1)));
   };
 
-  if (query && searchResultsIds.length > 0 && page < 50) {
+  if (queryText && searchResultsIds.length > 0 && pageNumber < numberOfPages) {
     return (
       <div className={styles.wrapper}>
         <Button onClick={loadNextPage} variant="contained" color="primary" size="medium">

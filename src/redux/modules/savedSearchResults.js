@@ -21,7 +21,7 @@ export default function reducer(state = initialState, action) {
           ...state.byId,
           [id]: {
             searchResult: action.payload.searchResult,
-            query: action.payload.query,
+            queryId: action.payload.queryId,
           },
         }
       }
@@ -31,11 +31,11 @@ export default function reducer(state = initialState, action) {
 }
 
 // Actions & thunks
-export const saveSearchResult = (searchResult, query) => ({
+export const saveSearchResult = (searchResult, queryId) => ({
   type: SAVE,
   payload: {
     searchResult,
-    query
+    queryId,
   },
 });
 
@@ -44,3 +44,7 @@ export const getSavedSearchResultTitleById = (id) => (state) => state.savedSearc
 export const getSavedSearchResultAuthorById = (id) => (state) => state.savedSearchResults.byId[id].searchResult.author;
 export const getSavedSearchResultCreatedAtById = (id) => (state) => (new Date(state.savedSearchResults.byId[id].searchResult.created_at));
 export const getSavedSearchResultUrlById = (id) => (state) => state.savedSearchResults.byId[id].searchResult.url;
+export const getSavedSearchResultQueryId = (id) => (state) => state.savedSearchResults.byId[id].queryId;
+export const getSavedSearchResultsQueryIds = (ids) => (state) =>
+  ids.map(id => state.savedSearchResults.byId[id].queryId)
+    .filter((id, index, queryIds) => queryIds.indexOf(id) === index);

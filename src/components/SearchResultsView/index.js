@@ -1,37 +1,37 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
-import queryString from 'query-string';
 
 import SearchResult from 'components/SearchResult';
 import Form from 'components/Form';
+import Statistics from 'components/Statistics';
 import LoadMore from 'components/LoadMore';
 import {
   getAllSearchResultsIds,
-  fetchSearchResults,
 } from 'redux/modules/searchResults';
+import {
+  getLastSearchQueryId,
+  getSearchQueryText,
+} from 'redux/modules/searchQueries';
+import {
+  search,
+} from 'redux/modules/search';
 
 const SearchResultsView = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
   const searchResultsIds = useSelector(getAllSearchResultsIds());
-
+  const lastSearchQueryId = useSelector(getLastSearchQueryId());
+  const queryText = useSelector(getSearchQueryText(lastSearchQueryId));
   const searchResults = searchResultsIds.map((id) => <SearchResult id={id} key={id} />);
-
-  useEffect(() => {
-    const query = queryString.parse(location.search).q;
-    if (query) {
-      dispatch(fetchSearchResults(query));
-    }
-  }, [dispatch, location.search])
 
   return (
     <Container maxWidth="sm">
       <Form
         label="Search"
-        onSubmit={(text) => dispatch(fetchSearchResults(text))}
+        value={queryText}
+        onSubmit={(searchText) => dispatch(search(searchText))}
       />
+      <Statistics queryIds={[lastSearchQueryId]}/>
       { searchResults }
       <LoadMore />
     </Container>

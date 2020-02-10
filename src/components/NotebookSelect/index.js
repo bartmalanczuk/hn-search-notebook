@@ -13,8 +13,10 @@ import {
 } from 'redux/modules/searchNotebooks';
 import {
   getSearchResultById,
-  getSearchResultsQuery,
 } from 'redux/modules/searchResults';
+import {
+  getLastSearchQueryId,
+} from 'redux/modules/searchQueries';
 import {
   saveSearchResult,
 } from 'redux/modules/savedSearchResults';
@@ -30,10 +32,10 @@ const NotebookItem = forwardRef(({id, searchResultId}, ref) => {
   const dispatch = useDispatch();
   const title = useSelector(getSearchNotebookTitleById(id));
   const searchResult = useSelector(getSearchResultById(searchResultId));
-  const query = useSelector(getSearchResultsQuery());
+  const queryId = useSelector(getLastSearchQueryId());
 
   const onClick = () => {
-    dispatch(saveSearchResult(searchResult, query));
+    dispatch(saveSearchResult(searchResult, queryId));
     dispatch(addSavedSearchResultToNotebook(id, searchResultId));
   };
 

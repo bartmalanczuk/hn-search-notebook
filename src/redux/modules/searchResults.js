@@ -18,7 +18,6 @@ export default function reducer(state = initialState, action) {
           (byId, searchResult) => ({ ...byId, [searchResult.objectID]: searchResult }),
           {},
         ),
-        query: action.payload.query,
       };
     case NEXT_PAGE:
       return {
@@ -34,42 +33,26 @@ export default function reducer(state = initialState, action) {
             {},
           ),
         },
-        query: action.payload.query,
       };
     default:
       return state;
   }
 }
 
-// Thunks
-export const fetchSearchResults = (text, date) => ({
+// Actions & Thunks
+export const fetchSearchResults = (searchResults) => ({
   type: FETCH,
   payload: {
-    searchResults: body.hits,
+    searchResults,
   },
 });
-export const fetchSearchResults = (text, date) => async (dispatch) => {
 
-  dispatch({
-    type: FETCH,
-    payload: {
-      searchResults: body.hits,
-    },
-  });
-}
-export const nextPageSearchResults = (query, page) => async (dispatch) => {
-  const response = await fetch(`http://hn.algolia.com/api/v1/search?query=${query}&page=${page}`);
-  const body = await response.json()
-
-  dispatch({
-    type: NEXT_PAGE,
-    payload: {
-      searchResults: body.hits,
-      query: query,
-      page: 0,
-    },
-  });
-}
+export const nextPageSearchResults = (searchResults) => ({
+  type: NEXT_PAGE,
+  payload: {
+    searchResults,
+  },
+});
 
 // Selectors
 export const getAllSearchResultsIds = () => (state) => state.searchResults.allIds;
@@ -77,6 +60,3 @@ export const getSearchResultById = (id) => (state) => state.searchResults.byId[i
 export const getSearchResultTitleById = (id) => (state) => state.searchResults.byId[id].title;
 export const getSearchResultAuthorById = (id) => (state) => state.searchResults.byId[id].author;
 export const getSearchResultCreatedAtById = (id) => (state) => (new Date(state.searchResults.byId[id].created_at));
-export const getSearchResultUrlById = (id) => (state) => state.searchResults.byId[id].url;
-export const getSearchResultsQuery = () => (state) => state.searchResults.query;
-export const getSearchResultsPage = () => (state) => state.searchResults.page;

@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   form: {
-    margin: `${theme.spacing(8)}px 0`,
+    marginTop: theme.spacing(8),
+    marginBottom: theme.spacing(8),
     display: 'flex',
     alignItems: 'center',
   },
@@ -15,9 +16,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Form = ({ onSubmit, label }) => {
+const Form = ({ onSubmit, label, value = '' }) => {
   const styles = useStyles();
-  const [text, setText] = useState('');
+  const [text, setText] = useState(value);
+
+  useEffect(() => {
+    setText(value);
+  }, [value]);
 
   const onFormSubmit = (event) => {
     event.preventDefault();
