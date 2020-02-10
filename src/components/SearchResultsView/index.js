@@ -31,7 +31,7 @@ const SearchResultsView = () => {
         value={queryText}
         onSubmit={(searchText) => dispatch(search(searchText))}
       />
-      <Statistics queryIds={[lastSearchQueryId]}/>
+      { queryText && <Statistics queryIds={[lastSearchQueryId]}/> }
       { searchResults }
       <LoadMore />
     </Container>

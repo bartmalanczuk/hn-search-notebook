@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 const getNumberOfHitsSince = async (queryText, timestamp) => {
   const response = await fetch(
-    `http://hn.algolia.com/api/v1/search?query=${queryText}&numericFilters=created_at_i>${timestamp}`
+    `http://hn.algolia.com/api/v1/search_by_date?tags=story&query=${queryText}&numericFilters=created_at_i>${timestamp}`
   );
   const body = await response.json();
 

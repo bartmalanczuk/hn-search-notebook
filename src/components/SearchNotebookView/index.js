@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Container from '@material-ui/core/Container';

@@ -5,6 +5,7 @@ import './index.css';
 import configureStore from './redux/configureStore';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import 'whatwg-fetch';
 
 const loadState = () => {
   try {
