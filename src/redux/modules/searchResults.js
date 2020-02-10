@@ -6,7 +6,6 @@ const NEXT_PAGE = 'searchResults/NEXT_PAGE';
 const initialState = {
   allIds: [],
   byId: {},
-  page: 0,
 };
 
 export default function reducer(state = initialState, action) {
@@ -19,7 +18,6 @@ export default function reducer(state = initialState, action) {
           (byId, searchResult) => ({ ...byId, [searchResult.objectID]: searchResult }),
           {},
         ),
-        page: action.payload.page,
         query: action.payload.query,
       };
     case NEXT_PAGE:
@@ -36,7 +34,6 @@ export default function reducer(state = initialState, action) {
             {},
           ),
         },
-        page: action.payload.page,
         query: action.payload.query,
       };
     default:
@@ -45,16 +42,18 @@ export default function reducer(state = initialState, action) {
 }
 
 // Thunks
-export const fetchSearchResults = (query) => async (dispatch) => {
-  const response = await fetch(`http://hn.algolia.com/api/v1/search?query=${query}`);
-  const body = await response.json()
+export const fetchSearchResults = (text, date) => ({
+  type: FETCH,
+  payload: {
+    searchResults: body.hits,
+  },
+});
+export const fetchSearchResults = (text, date) => async (dispatch) => {
 
   dispatch({
     type: FETCH,
     payload: {
       searchResults: body.hits,
-      query: query,
-      page: 0,
     },
   });
 }
